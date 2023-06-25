@@ -1,0 +1,86 @@
+# Unity generated
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Visual Studio / MonoDevelop generated
+/[Ee]xported[Oo]bj/
+/.vs/
+/*.userprefs
+/*.csproj
+/*.sln
+/*.suo
+/*.tmp
+/*.user
+/*.unityproj
+/*.booproj
+
+# Builds
+/*.apk
+/*.unitypackage
+
+# Crashlytics
+/crashlytics-build.properties
+
+# Android auto-generated files
+/Assets/Plugins/Android/libs/unity-*.jar
+/Assets/Plugins/Android/src/main/
+/Assets/Plugins/Android/AndroidManifest.xml
+/Assets/Plugins/Android/proguard-*.txt
+
+# iOS auto-generated files
+/Assets/Plugins/iOS/
+
+# macOS meta files
+/.DS_Store
+
+# Unity3D generated metadata files
+/*.pidb
+/*.pdb
+/*.mdb
+
+# Rider generated
+.idea/
+
+# Visual Studio Code generated
+.vscode/
+
+# Build cache directory (deprecated in Unity 2018.2)
+/BuildCache/
+
+# Shader cache
+/Temp/ShaderCache/
+
+# Unity package manager
+/Packages/
+
+# Lightning Box SDK
+/Assets/LightningBox/
+
+# PIDI game jam
+/PIDI Game Jam Template/Assets/Plugins/
+
+# Temporary auto-generated Android Assets
+/Assets/Plugins/Android/assets/*
+
+# UMP generated
+/Assets/StreamingAssets/UMPEditor/
+
+# Wwise audio engine generated
+/Assets/Plugins/Wwise/
+
+# Customizable time of day
+/Assets/Addons/CustomizableTimeOfDay/Editor/CToD_EditorSettings.asset
+
+# Ignore .DS_Store files created by macOS
+**/.DS_Store
+
+# Ignore .thumbs files created by macOS
+**/.thumbs
+
+# Ignore .Spotlight files created by macOS
+**/.Spotlight
