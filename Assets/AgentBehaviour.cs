@@ -21,13 +21,14 @@ public class AgentBehaviour : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void Act(AudioClip localVoiceResponse)
+    public void Act(AudioClip localVoiceResponse = null)
     {
         print("Acting");
         voiceResponse = localVoiceResponse;
         actions = GetComponent<OpenAIChat>().actions;
-        Speak();
+        
         Actions();
+        Speak();
     }
 
     public void Speak()

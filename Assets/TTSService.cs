@@ -15,7 +15,7 @@ public class TTSService : MonoBehaviour
 
     // The language and voice name (e.g., en-US, en-US-AriaNeural)
     private const string Language = "en-US";
-    private const string VoiceName = "en-US-AriaNeural";
+    public string VoiceName = "en-US-AriaNeural";
 
     public string accessToken;
 

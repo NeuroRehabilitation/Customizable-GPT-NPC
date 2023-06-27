@@ -31387,16 +31387,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: 
   clipRecorded: {fileID: 0}
-  minSilenceDuration: 3
+  minSilenceDuration: 2
   sttService: {fileID: 945781796823712205}
-  agentTalking: 0
   silenceTimer: 0
   speakingTimer: 0
-  levelMax: 0
   agentBehaviour: {fileID: 0}
   rmsValue: 1
   frequency: 16000
-  SilenceThreshold: 2
+  SilenceThreshold: 1
   debugint: 0
 --- !u!114 &945781796823712205
 MonoBehaviour:
@@ -31412,7 +31410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subscriptionKey: ea7dd199531644d0814e9c666eca524a
   region: westeurope
-  languageCode: en-US
+  languageCode: pt-PT
   ChatGPTAPI: {fileID: 945781796823712203}
   prompt: []
 --- !u!82 &945781796823712206
@@ -31523,6 +31521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b451180a0f9954c878c03985498ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VoiceName: pt-PT-RaquelNeural
   accessToken: 
 --- !u!114 &945781796823712209
 MonoBehaviour:
@@ -31541,7 +31540,7 @@ MonoBehaviour:
   voiceResponse: {fileID: 0}
   actions: []
   agentTalking: 0
-  personality: You Are a very dumb kid
+  personality: You Are a very dumb kid. Respond in the language of the user
 --- !u!65 &945781796823712210
 BoxCollider:
   m_ObjectHideFlags: 0

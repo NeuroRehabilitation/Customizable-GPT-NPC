@@ -37,6 +37,7 @@ public class STTService : MonoBehaviour
                 // Parse JSON response to get transcribed text.
                 string displayText = ParseDisplayText(result);
                 prompt[currIndex] = displayText;
+                ChatGPTAPI.RunConversation(prompt[currIndex],true);
                 if (isSilenceDetected)
                 {
                     string promptSend = "";
