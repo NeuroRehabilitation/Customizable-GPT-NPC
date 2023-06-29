@@ -9,10 +9,16 @@ public class STTService : MonoBehaviour
     [SerializeField] private string subscriptionKey = "ea7dd199531644d0814e9c666eca524a";
     [SerializeField] private string region = "westeurope";
     [SerializeField] private string languageCode = "en-US";
+    public AgentBehaviour agentBehaviour;
 
     [SerializeField] private OpenAIChat ChatGPTAPI;
 
     public List<string> prompt;
+
+    void Start()
+    {
+        agentBehaviour = GetComponent<AgentBehaviour>();
+    }
 
     public IEnumerator Transcribe(AudioClip clipRecorded, bool isSilenceDetected)
     {
@@ -45,8 +51,12 @@ public class STTService : MonoBehaviour
                     {
                         promptSend += s + " ";
                     }
+                    
+                    
+
                     print("Prompt Sent to ChatGPtAPI");
                     ChatGPTAPI.RunConversation(promptSend);
+                    
                     prompt.Clear();
                 }
             }

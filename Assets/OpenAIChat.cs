@@ -34,7 +34,10 @@ public class OpenAIChat : MonoBehaviour
         actions.Clear();
         // Run the conversation
         string jsonRequest = CreateJsonRequest();
-        StartCoroutine(SendWebRequest(jsonRequest, actionsOnly));
+        if (localPrompt.Length > 2)
+            StartCoroutine(SendWebRequest(jsonRequest, actionsOnly));
+        else
+            agentBehaviour.agentTalking = false;
     }
 
     // Creates the json request
@@ -77,7 +80,9 @@ public class OpenAIChat : MonoBehaviour
 
         if (request.isNetworkError || request.isHttpError)
         {
+            
             Debug.Log(request.error);
+            
         }
         else
         {
@@ -86,7 +91,6 @@ public class OpenAIChat : MonoBehaviour
             
             // Extract the assistant message and actions
             var functionCallResponse = JSON.Parse(jsonResponse["choices"][0]["message"]["function_call"]["arguments"].Value);
-            print("ChatGPT response sent to TTS \n" + functionCallResponse);
             if (!actionsOnly)
                 message = functionCallResponse["message"].Value;
             actions = new List<string>();
@@ -96,7 +100,7 @@ public class OpenAIChat : MonoBehaviour
             }
             print("ChatGPT response sent to TTS \n" + functionCallResponse);
             if (!actionsOnly)
-                StartCoroutine(ttsService.GetAccessToken(message));
+                ttsService.ConvertToSpeech(message);//StartCoroutine(ttsService.GetAccessToken(message));
             else
                 GetComponent<AgentBehaviour>().Act();
             //prompt = "";

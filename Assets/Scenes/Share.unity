@@ -31394,7 +31394,7 @@ MonoBehaviour:
   agentBehaviour: {fileID: 0}
   rmsValue: 1
   frequency: 16000
-  SilenceThreshold: 1
+  SilenceThreshold: 0.76
   debugint: 0
 --- !u!114 &945781796823712205
 MonoBehaviour:
@@ -31410,7 +31410,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subscriptionKey: ea7dd199531644d0814e9c666eca524a
   region: westeurope
-  languageCode: pt-PT
+  languageCode: en-US
+  agentBehaviour: {fileID: 0}
   ChatGPTAPI: {fileID: 945781796823712203}
   prompt: []
 --- !u!82 &945781796823712206
@@ -31521,8 +31522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b451180a0f9954c878c03985498ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VoiceName: pt-PT-RaquelNeural
-  accessToken: 
+  VoiceName: en-US-DavisNeural
+  accessToken: eyJhbGciOiJFUzI1NiIsImtpZCI6ImtleTEiLCJ0eXAiOiJKV1QifQ.eyJyZWdpb24iOiJ3ZXN0ZXVyb3BlIiwic3Vic2NyaXB0aW9uLWlkIjoiMmE1NzEwZDZlYjg5NDE2MjljY2I5YjM5NzIxN2VjOGQiLCJwcm9kdWN0LWlkIjoiU3BlZWNoU2VydmljZXMuRjAiLCJjb2duaXRpdmUtc2VydmljZXMtZW5kcG9pbnQiOiJodHRwczovL2FwaS5jb2duaXRpdmUubWljcm9zb2Z0LmNvbS9pbnRlcm5hbC92MS4wLyIsImF6dXJlLXJlc291cmNlLWlkIjoiL3N1YnNjcmlwdGlvbnMvOGUwMGU3YTQtNjU2MS00NDQ2LTg3YjMtNmU3Y2MxYjZiZTU3L3Jlc291cmNlR3JvdXBzL3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9Tb3V0aFBhcmsxMjMzMjIzMTIzMjEiLCJzY29wZSI6InNwZWVjaHNlcnZpY2VzIiwiYXVkIjoidXJuOm1zLnNwZWVjaHNlcnZpY2VzLndlc3RldXJvcGUiLCJleHAiOjE2ODgwNDEyMjcsImlzcyI6InVybjptcy5jb2duaXRpdmVzZXJ2aWNlcyJ9.9APsYAfOflxJYGtD-ByS_ebOQZHN_K6jki8kDughkL6c8VmLESsIOY4xu4yrxBaWPQyHFPFqev_HTOWhvcIEGQ
 --- !u!114 &945781796823712209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31540,7 +31541,8 @@ MonoBehaviour:
   voiceResponse: {fileID: 0}
   actions: []
   agentTalking: 0
-  personality: You Are a very dumb kid. Respond in the language of the user
+  personality: Respond as if you were mike tyson, make it so that the text is with
+    his very think lisp
 --- !u!65 &945781796823712210
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -44,6 +44,7 @@ public class TTSService : MonoBehaviour
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError("Text-to-Speech request failed: " + request.error);
+            StartCoroutine(GetAccessToken(text));
             yield break;
         }
         print("TTS response sent to AgentBehaviour");
@@ -65,5 +66,6 @@ public class TTSService : MonoBehaviour
 
         accessToken = tokenRequest.downloadHandler.text.Trim();
         ConvertToSpeech(message);
+        yield break;
     }
 }
