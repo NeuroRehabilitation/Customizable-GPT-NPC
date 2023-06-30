@@ -6097,6 +6097,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6661fea619874cd43a746fbc5df7af5b, type: 3}
   m_PrefabInstance: {fileID: 87327538}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &423781726 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6243246677727451433, guid: fb3c93ba538cdd14caf1cc9b95910bd4, type: 3}
+  m_PrefabInstance: {fileID: 2011514203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &437133872
 GameObject:
   m_ObjectHideFlags: 0
@@ -11818,6 +11823,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6768812842656547731, guid: fb3c93ba538cdd14caf1cc9b95910bd4, type: 3}
   m_PrefabInstance: {fileID: 2011514203}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &771481140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423781726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49fa1cb75f5782148a8fddf7822f7387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookAtTime: 5
+  lookAwayTime: 3
+  headLookProb: 0.5
+  eyeLookProb: 1
+  maxXRotation: 45
+  maxXEyeRotation: 20
+  maxYRotation: 100
+  maxYEyeRotation: 45
+  LookAtTimeParameterName: LookAtTime
+  LookAwayTimeParameterName: LookAwayTime
+  lookAtTarget: {fileID: 1620557535}
+  transitionSpeed: 1
+  currentHeadWeight2: 0.54
+  eye: {fileID: 965781175}
 --- !u!1 &777673996
 GameObject:
   m_ObjectHideFlags: 0
@@ -16724,7 +16755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165767584}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.095, y: 0.214, z: -2.2}
+  m_LocalPosition: {x: -0.095, y: 0.214, z: -2.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -31385,17 +31416,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b335b425f1536b04ab46ee6071899660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  voiceResponse: 0
   device: 
   clipRecorded: {fileID: 0}
-  minSilenceDuration: 2
   sttService: {fileID: 945781796823712205}
-  silenceTimer: 0
   speakingTimer: 0
   agentBehaviour: {fileID: 0}
-  rmsValue: 1
   frequency: 16000
-  SilenceThreshold: 0.76
-  debugint: 0
 --- !u!114 &945781796823712205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31541,8 +31568,7 @@ MonoBehaviour:
   voiceResponse: {fileID: 0}
   actions: []
   agentTalking: 0
-  personality: Respond as if you were mike tyson, make it so that the text is with
-    his very think lisp
+  personality: Respond as if you were a mad scientist
 --- !u!65 &945781796823712210
 BoxCollider:
   m_ObjectHideFlags: 0

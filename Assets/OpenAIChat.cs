@@ -6,6 +6,7 @@ using SimpleJSON;
 
 public class OpenAIChat : MonoBehaviour
 {
+    [SerializeField] public List<Dictionary<string, string>> messages;
     string apiKey = "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";
     string url = "https://api.openai.com/v1/chat/completions";
 
@@ -24,15 +25,27 @@ public class OpenAIChat : MonoBehaviour
         // Get the TTSService component
         ttsService = GetComponent<TTSService>();
         agentBehaviour = GetComponent<AgentBehaviour>();
+        messages = new List<Dictionary<string, string>>();
+        messages.Add(new Dictionary<string, string>
+        {
+            { "role", "system" },
+            { "content", agentBehaviour.personality + " keep your responses short"}
+        });
     }
 
     // The main function
     public void RunConversation(string localPrompt, bool actionsOnly = false)
     {
+        // Add the user's prompt to the messages list
+        messages.Add(new Dictionary<string, string>
+        {
+            { "role", "user" },
+            { "content", localPrompt }
+        });
+
         prompt = localPrompt;
         message = "";
         actions.Clear();
-        // Run the conversation
         string jsonRequest = CreateJsonRequest();
         if (localPrompt.Length > 2)
             StartCoroutine(SendWebRequest(jsonRequest, actionsOnly));
@@ -43,21 +56,24 @@ public class OpenAIChat : MonoBehaviour
     // Creates the json request
     string CreateJsonRequest()
     {
-        var functions = "[{\"name\": \"generate_npc_response\", \"description\": \"Generates a response message and an array of possible actions for a NPC\", \"parameters\": {\"type\": \"object\", \"properties\": {\"message\": {\"type\": \"string\", \"description\": \"The response message from the NPC\"}, \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\", \"enum\": [\"HeadIdle\", \"HeadTilt\", \"HeadNod\", \"TorsoStraight\", \"TorsoLeaning\", \"LegsSitted\", \"LegsCrossed\", \"MouthIdle\", \"MouthSmile\", \"MouthSoftSmile\", \"EyebrowsIdle\", \"EyebrowsSoftSmile\", \"EyebrowsSmile\"], \"description\": \"The action that the NPC will perform\"}, \"description\": \"List of possible actions for the NPC, should be used one of each category\"}}, \"required\": [\"message\", \"actions\"]}}]";
+        var functions = "[{\"name\": \"generate_npc_response\", \"description\": \"Generates a response message and an array of possible actions for a NPC\", \"parameters\": {\"type\": \"object\", \"properties\": {\"message\": {\"type\": \"string\", \"description\": \"The response message from the NPC\"}, \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\", \"enum\": [\"HeadIdle\", \"HeadTilt\", \"HeadNod\", \"TorsoStraight\", \"TorsoLeaning\", \"LegsSitted\", \"MouthIdle\", \"MouthSmile\", \"MouthSoftSmile\", \"EyebrowsIdle\", \"EyebrowsSoftSmile\", \"EyebrowsSmile\"], \"description\": \"The action that the NPC will perform\"}, \"description\": \"List of possible actions for the NPC, should be used one of each category\"}}, \"required\": [\"message\", \"actions\"]}}]";
         string jsonRequest =
             "{" +
             "\"model\": \"gpt-3.5-turbo-0613\", " +
             "\"temperature\": 1.2, " +
-            "\"messages\": [" +
-            "{" +
-            "\"role\": \"system\", " +
-            "\"content\": \"" + agentBehaviour.personality + ".You will receive data from STT that may be inaccurate and some words missing, do your best.\"" +
-            "}," +
-            "{" +
-            "\"role\": \"user\", " +
-            "\"content\": \"" + prompt + "\"" +
-            "}" +
-            "]," +
+            "\"messages\": [";
+
+        // Add each message in the list to the request
+        foreach (var message in messages)
+        {
+            jsonRequest +=
+                "{" +
+                "\"role\": \"" + message["role"] + "\", " +
+                "\"content\": \"" + message["content"] + "\"" +
+                "},";
+        }
+
+        jsonRequest = jsonRequest.TrimEnd(',') + "]," +
             "\"functions\": " + functions + "," +
             "\"function_call\": " + "{\"name\": \"generate_npc_response\"}" +
             "}";
@@ -88,11 +104,19 @@ public class OpenAIChat : MonoBehaviour
         {
             // Here you can process the response
             var jsonResponse = JSON.Parse(request.downloadHandler.text);
-            
+            print("json response" + jsonResponse.ToString() + "\n");
             // Extract the assistant message and actions
+            // Extract the assistant message and add it to the messages list
             var functionCallResponse = JSON.Parse(jsonResponse["choices"][0]["message"]["function_call"]["arguments"].Value);
             if (!actionsOnly)
+            {
                 message = functionCallResponse["message"].Value;
+                messages.Add(new Dictionary<string, string>
+                {
+                    { "role", "assistant" },
+                    { "content", message }
+                });
+            }
             actions = new List<string>();
             foreach (JSONNode action in functionCallResponse["actions"].AsArray)
             {

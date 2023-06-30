@@ -51,8 +51,10 @@ public class AgentBehaviour : MonoBehaviour
             }
             else
             {
+                anim.CrossFade("ArmsInLegs", 0.3f, 3, 0.1f); 
+                anim.CrossFade("MouthIdle", 0.3f, 5, 0.01f);
                 Actions();
-                anim.CrossFade("ArmsInLegs", 0.1f, 3, 0.1f);
+                
                 /*anim.CrossFade("HeadIdle", 1f, 1, 0.5f); // Set the animation state to idle when the AudioClip is not playing
                 anim.CrossFade("TorsoStraight", 0.4f, 2, 0.5f); // Set the animation state to idle when the AudioClip is not playing
                 anim.CrossFade("ArmsInLegs", 0.1f, 3, 0.1f); // Set the animation state to idle when the AudioClip is not playing

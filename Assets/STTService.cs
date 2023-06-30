@@ -43,7 +43,6 @@ public class STTService : MonoBehaviour
                 // Parse JSON response to get transcribed text.
                 string displayText = ParseDisplayText(result);
                 prompt[currIndex] = displayText;
-                ChatGPTAPI.RunConversation(prompt[currIndex],true);
                 if (isSilenceDetected)
                 {
                     string promptSend = "";
@@ -51,13 +50,14 @@ public class STTService : MonoBehaviour
                     {
                         promptSend += s + " ";
                     }
-                    
-                    
-
-                    print("Prompt Sent to ChatGPtAPI");
+                    print("Prompt List Sent to ChatGPtAPI");
                     ChatGPTAPI.RunConversation(promptSend);
                     
                     prompt.Clear();
+                }
+                else
+                {
+                    ChatGPTAPI.RunConversation(prompt[currIndex],true);
                 }
             }
             else
