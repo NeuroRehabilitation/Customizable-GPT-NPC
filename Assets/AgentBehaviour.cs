@@ -9,10 +9,16 @@ public class AgentBehaviour : MonoBehaviour
     [HideInInspector]public AudioSource audioSource;
     
     [HideInInspector]public AudioClip voiceResponse;
+    [SerializeField] public List<string> availableActions;
     public List<string> actions;
     public bool agentTalking = false;
 
     private bool wasPlaying = false; // Add this line
+
+    public bool requestActions;
+    public bool requestResponse;
+    public int memory;
+    public string knowledge;
     public string personality;
 
     public void Start()
@@ -51,8 +57,7 @@ public class AgentBehaviour : MonoBehaviour
             }
             else
             {
-                anim.CrossFade("ArmsInLegs", 0.3f, 3, 0.1f); 
-                anim.CrossFade("MouthIdle", 0.3f, 5, 0.01f);
+                ResetPoses();
                 Actions();
                 
                 /*anim.CrossFade("HeadIdle", 1f, 1, 0.5f); // Set the animation state to idle when the AudioClip is not playing
@@ -68,8 +73,18 @@ public class AgentBehaviour : MonoBehaviour
 
     public void Thinking()
     {
+        ResetPoses();
         anim.CrossFade("HeadTilt", 0.2f, 1, 0.1f);
         anim.CrossFade("ArmsThinking", .2f, 3, 0.1f);
+    }
+    public void ResetPoses()
+    {
+        anim.CrossFade("HeadIdle", 1f, 1, 0.1f);
+        anim.CrossFade("TorsoStraight", 1f, 2, 0.1f);
+        anim.CrossFade("ArmsInLegs", .5f, 3, 0.1f); 
+        anim.CrossFade("LegsSitted", 1f, 4, 0.1f);
+        anim.CrossFade("MouthIdle", 1f, 5, 0.1f);
+        anim.CrossFade("EyeBrowsIdle", 1f, 6, 0.1f);
     }
 
     public void Actions()

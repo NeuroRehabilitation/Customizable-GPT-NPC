@@ -149,7 +149,7 @@ public class VoiceCapture : MonoBehaviour
             speakingTimer += Time.deltaTime;
 
             // If 'K' key is pressed, stop recording.
-            if (Input.GetKeyUp(KeyCode.K))
+            if (Input.GetKey(KeyCode.K))
             {
                 agentBehaviour.Thinking();
                 agentBehaviour.agentTalking = true;
