@@ -7,8 +7,38 @@ public class STTService : MonoBehaviour
 {
 
     [SerializeField] private string subscriptionKey = "ea7dd199531644d0814e9c666eca524a";
-    [SerializeField] private string region = "westeurope";
-    [SerializeField] private string languageCode = "en-US";
+
+    public enum Region
+    {
+        WestEurope,
+        NorthEurope,
+        EastEurope,
+    }
+
+    [SerializeField] private Region regionEnumed;
+
+    public string region
+    {
+        get { return regionEnumed.ToString(); }
+    }
+
+    public enum LanguageCode
+    {
+        en_US, // English (United States)
+        es_ES, // Spanish (Spain)
+        fr_FR, // French (France)
+        de_DE, // German (Germany)
+        // add more as needed
+    }
+
+    [SerializeField] private LanguageCode languageCodeEnumed;
+
+    public string languageCode
+    {
+        get { return languageCodeEnumed.ToString().Replace('_', '-'); }
+    }
+
+    [HideInInspector]
     public AgentBehaviour agentBehaviour;
 
     [SerializeField] private OpenAIChat ChatGPTAPI;

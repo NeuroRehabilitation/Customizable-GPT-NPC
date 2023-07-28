@@ -8,15 +8,92 @@ public class TTSService : MonoBehaviour
     private const string VoicesEndpoint = "https://westeurope.tts.speech.microsoft.com/cognitiveservices/voices/list";
 
     // Subscription key for accessing the API
-    private const string SubscriptionKey = "ea7dd199531644d0814e9c666eca524a";
+    public string SubscriptionKey = "ea7dd199531644d0814e9c666eca524a";
 
     // The audio format (e.g., audio-24khz-96kbitrate-mono-mp3)
     private const string AudioFormat = "audio-16khz-32kbitrate-mono-mp3";
 
     // The language and voice name (e.g., en-US, en-US-AriaNeural)
-    private const string Language = "en-US";
-    public string VoiceName = "en-US-AriaNeural";
+    public enum LanguageEnum
+    {
+        en_US,
+        en_GB,
+        es_ES,
+        de_DE,
+    }
 
+    [SerializeField] private LanguageEnum languageEnumed;
+
+    public string Language
+    {
+        get { return languageEnumed.ToString(); }
+    }
+
+
+    public enum VoiceNameEnum
+    {
+        en_US_AriaNeural,
+        en_US_DavisNeural,
+        en_US_AshleyNeural,
+        en_US_BrandonNeura,
+        // Add more as needed
+    }
+
+    [SerializeField] private VoiceNameEnum voiceNameEnumed;
+
+    public string VoiceName
+    {
+        get { return voiceNameEnumed.ToString().Replace('_', '-'); }
+    }
+
+
+    public enum GenderEnum
+    {
+        Male,
+        Female,
+    }
+
+    [SerializeField] private GenderEnum genderEnumed;
+
+    public string Gender
+    {
+        get { return genderEnumed.ToString(); }
+    }
+
+
+    public enum StyleEnum
+    {
+        None,
+        Angry,
+        Chat,
+        Cheerful,
+        CustomerService,
+        Empathetic,
+        Excited,
+        Friendly,
+        Hopeful,
+        NarrationProfessional,
+        NewscastCasual,
+        NewscastFormal,
+        Sad,
+        Shouting,
+        Terrified,
+        Unfriendly,
+        Whispering
+        // add more as needed
+    }
+
+    [SerializeField] public StyleEnum styleEnumed;
+
+    public string Style
+    {
+        get { return styleEnumed.ToString().Replace('_', '-').ToLower(); } // This converts 'CustomerService' to 'customerservice' format
+    }
+
+    [Range(0.1f, 2f)]
+    public float StyleStrength;
+
+    [HideInInspector]
     public string accessToken;
 
     public void ConvertToSpeech(string text)
@@ -26,9 +103,16 @@ public class TTSService : MonoBehaviour
 
     private IEnumerator PostTextToSpeechRequest(string text)
     {
-        // Create the SSML request body
-        string body = $"<speak version='1.0' xml:lang='{Language}'><voice xml:lang='{Language}' xml:gender='Female' name='{VoiceName}'>{text}</voice></speak>";
-
+        string body = "";
+        if (Style.ToLower() == "none")
+        {
+            body = $"<speak version='1.0' xml:lang='{Language}'><voice xml:lang='{Language}' xml:gender='{Gender}' name='{VoiceName}'>{text}</voice></speak>";
+        }
+        else
+        {
+            body = $"<speak version='1.0' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='{Language}'><voice xml:lang='{Language}' xml:gender='{Gender}' name='{VoiceName}'> <mstts:express-as style='{Style}' styledegree='{StyleStrength}'>{text}</mstts:express-as></voice></speak>";
+        }
+        print(body);
         // Create the HTTP request
         UnityWebRequest request = UnityWebRequest.Post(ApiEndpoint, "");
         request.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(body));

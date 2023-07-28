@@ -637,6 +637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameObject
       objectReference: {fileID: 0}
+    - target: {fileID: 101129197636732744, guid: bcf3b2fb5cd8d1443b04c5c3ed0facf2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcf3b2fb5cd8d1443b04c5c3ed0facf2, type: 3}
 --- !u!1 &1362266886
@@ -3319,8 +3323,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subscriptionKey: ea7dd199531644d0814e9c666eca524a
-  region: westeurope
-  languageCode: en-US
+  regionEnumed: 0
+  languageCodeEnumed: 0
   agentBehaviour: {fileID: 0}
   ChatGPTAPI: {fileID: 945781796823712203}
   prompt: []
@@ -3432,7 +3436,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b451180a0f9954c878c03985498ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VoiceName: en-US-AshleyNeural
+  SubscriptionKey: ea7dd199531644d0814e9c666eca524a
+  languageEnumed: 0
+  voiceNameEnumed: 0
+  genderEnumed: 1
+  styleEnumed: 3
+  StyleStrength: 0.5
   accessToken: eyJhbGciOiJFUzI1NiIsImtpZCI6ImtleTEiLCJ0eXAiOiJKV1QifQ.eyJyZWdpb24iOiJ3ZXN0ZXVyb3BlIiwic3Vic2NyaXB0aW9uLWlkIjoiMmE1NzEwZDZlYjg5NDE2MjljY2I5YjM5NzIxN2VjOGQiLCJwcm9kdWN0LWlkIjoiU3BlZWNoU2VydmljZXMuRjAiLCJjb2duaXRpdmUtc2VydmljZXMtZW5kcG9pbnQiOiJodHRwczovL2FwaS5jb2duaXRpdmUubWljcm9zb2Z0LmNvbS9pbnRlcm5hbC92MS4wLyIsImF6dXJlLXJlc291cmNlLWlkIjoiL3N1YnNjcmlwdGlvbnMvOGUwMGU3YTQtNjU2MS00NDQ2LTg3YjMtNmU3Y2MxYjZiZTU3L3Jlc291cmNlR3JvdXBzL3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9Tb3V0aFBhcmsxMjMzMjIzMTIzMjEiLCJzY29wZSI6InNwZWVjaHNlcnZpY2VzIiwiYXVkIjoidXJuOm1zLnNwZWVjaHNlcnZpY2VzLndlc3RldXJvcGUiLCJleHAiOjE2ODgwNDEyMjcsImlzcyI6InVybjptcy5jb2duaXRpdmVzZXJ2aWNlcyJ9.9APsYAfOflxJYGtD-ByS_ebOQZHN_K6jki8kDughkL6c8VmLESsIOY4xu4yrxBaWPQyHFPFqev_HTOWhvcIEGQ
 --- !u!114 &945781796823712209
 MonoBehaviour:

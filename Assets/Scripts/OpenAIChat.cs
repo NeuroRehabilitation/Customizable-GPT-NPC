@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
-
+using System;
+using Newtonsoft.Json;
 
 [System.Serializable]
 public class Message
@@ -79,9 +80,54 @@ public class OpenAIChat : MonoBehaviour
             actionsJsonArray += $"\"{action}\",";
         }
         actionsJsonArray = actionsJsonArray.TrimEnd(',') + "]";
+        string[] styleEnumArray = Enum.GetNames(typeof(TTSService.StyleEnum));
 
+        // Convert string array to JSON array
+        string styleEnumJsonArray = JsonConvert.SerializeObject(styleEnumArray);
+        print(styleEnumJsonArray);
         // Hardcoded function template. The action enum list is now replaced with the JSON array.
-        var functions = "[{\"name\": \"generate_npc_response\", \"description\": \"Generates a response of a full message and an array of possible actions for a NPC\", \"parameters\": {\"type\": \"object\", \"properties\": { \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\", \"enum\": " + actionsJsonArray + ", \"description\": \"The action that the NPC will perform\"}, \"description\": \"List of possible actions for the NPC, should be used one of each category\"},\"message\": {\"type\": \"string\", \"description\": \"The response of the full message from the NPC, it should be the full message including whats after the : \"}}, \"required\": [\"message\", \"actions\"]}}]";
+       var functions = @"
+        [
+            {
+                ""name"": ""generate_npc_response"",
+                ""description"": ""Generates a response of a full message and an array of possible actions for a NPC"",
+                ""parameters"": 
+                {
+                    ""type"": ""object"",
+                    ""properties"": 
+                    {
+                        ""actions"": 
+                        {
+                            ""type"": ""array"",
+                            ""items"": 
+                            {
+                                ""type"": ""string"",
+                                ""enum"": " + actionsJsonArray + @",
+                                ""description"": ""The action that the NPC will perform""
+                            },
+                            ""description"": ""List of possible actions for the NPC, should be used one of each category""
+                        },
+                        ""message"": 
+                        {
+                            ""type"": ""string"",
+                            ""description"": ""The response of the full message from the NPC, it should be the full message including whats after the : ""
+                        },
+                        ""style"": 
+                        {
+                            ""type"": ""array"",
+                            ""items"": 
+                            {
+                                ""type"": ""string"",
+                                ""enum"": " + styleEnumJsonArray + @",
+                                ""description"": ""style of the message""
+                            },
+                            ""description"": ""List of possible styles for the message of the NPC, choose only one""
+                        }
+                    },
+                    ""required"": [""message"", ""actions"", ""style""]
+                }
+            }
+        ]";
 
         string jsonRequest =
             "{" +
@@ -90,7 +136,6 @@ public class OpenAIChat : MonoBehaviour
             "\"max_tokens\": 2048, " +
             "\"messages\": [";
 
-        // Add each message in the list to the request
         // Add each message in the list to the request
         foreach (var message in messages)
         {
@@ -151,6 +196,8 @@ public class OpenAIChat : MonoBehaviour
                 message = message.Replace("\"", "\\\"");
                 message = message.Replace("\n", "     ");
                 print("message" + message + "\n");
+                print("messageS" + functionCallResponse["style"].Value + "\n");
+                ttsService.styleEnumed = (TTSService.StyleEnum)Enum.Parse(typeof(TTSService.StyleEnum), functionCallResponse["style"].Value);
                 messages.Add(new Message
                 {
                     role = "assistant",
