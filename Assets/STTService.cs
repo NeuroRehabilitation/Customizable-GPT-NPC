@@ -42,7 +42,19 @@ public class STTService : MonoBehaviour
 
                 // Parse JSON response to get transcribed text.
                 string displayText = ParseDisplayText(result);
-                prompt[currIndex] = displayText;
+                try
+                {
+                    prompt[currIndex] = displayText;
+                }
+                catch (System.Exception)
+                {
+                    print("Prompt List is Empty");
+                }
+                
+
+                
+
+                
                 if (isSilenceDetected)
                 {
                     string promptSend = "";
@@ -57,7 +69,16 @@ public class STTService : MonoBehaviour
                 }
                 else
                 {
-                    ChatGPTAPI.RunConversation(prompt[currIndex],true);
+                    if (displayText == string.Empty)
+                    {
+                        //delete last prompt
+                        prompt.RemoveAt(prompt.Count-1);
+                    }
+                    else
+                    {
+                        ChatGPTAPI.RunConversation(prompt[currIndex],true);
+                    }
+                    
                 }
             }
             else
@@ -89,29 +110,22 @@ public class STTService : MonoBehaviour
 
     public byte[] AudioClipToWav(AudioClip clipRecorded)
     {
-        int sampleRate = 16000;
-        int channelCount = clipRecorded.channels;
         int sampleCount = clipRecorded.samples;
-        int frequency = clipRecorded.frequency;
 
         float[] audioData = new float[sampleCount];
         clipRecorded.GetData(audioData, 0);
-
-        short[] audioSamples = new short[sampleCount];
-        for (int i = 0; i < sampleCount; i++)
-        {
-            audioSamples[i] = (short)(audioData[i] * short.MaxValue);
-        }
 
         byte[] wavData = new byte[sampleCount * 2]; // 2 bytes per sample for 16-bit audio
 
         int dataIndex = 0;
         for (int i = 0; i < sampleCount; i++)
         {
-            short sample = audioSamples[i];
+            short sample = (short)(audioData[i] * short.MaxValue);
             wavData[dataIndex++] = (byte)(sample & 0xff);
             wavData[dataIndex++] = (byte)((sample >> 8) & 0xff);
         }
+
         return wavData;
     }
+
 }

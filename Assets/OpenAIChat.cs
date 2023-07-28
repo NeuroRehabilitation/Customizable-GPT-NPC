@@ -39,7 +39,7 @@ public class OpenAIChat : MonoBehaviour
         messages.Add(new Message
         {
             role = "system",
-            content = "Knowledge: " + agentBehaviour.knowledge + " Personality: " + agentBehaviour.personality + " keep your responses short"
+            content = " ALWAYS RESPOND IN ONLY ONE FULL SENTENCE and ALWAYS RESPOND ACCORDING TO YOUR PERSONALITY \\n YOUR Knowledge: " + agentBehaviour.knowledge +" \\n YOUR PERSONALITY: " + agentBehaviour.personality + "\\n REMEMBER TO RESPOND ACCORDING TO YOUR PERSONALITY"
         });
     }
 
@@ -64,10 +64,9 @@ public class OpenAIChat : MonoBehaviour
         message = "";
         actions.Clear();
         string jsonRequest = CreateJsonRequest();
-        if (localPrompt.Length > 2)
+ 
             StartCoroutine(SendWebRequest(jsonRequest, actionsOnly));
-        else
-            agentBehaviour.agentTalking = false;
+
     }
 
     // Creates the json request
@@ -82,13 +81,13 @@ public class OpenAIChat : MonoBehaviour
         actionsJsonArray = actionsJsonArray.TrimEnd(',') + "]";
 
         // Hardcoded function template. The action enum list is now replaced with the JSON array.
-        var functions = "[{\"name\": \"generate_npc_response\", \"description\": \"Generates a response message and an array of possible actions for a NPC\", \"parameters\": {\"type\": \"object\", \"properties\": {\"message\": {\"type\": \"string\", \"description\": \"The response message from the NPC\"}, \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\", \"enum\": " + actionsJsonArray + ", \"description\": \"The action that the NPC will perform\"}, \"description\": \"List of possible actions for the NPC, should be used one of each category\"}}, \"required\": [\"message\", \"actions\"]}}]";
+        var functions = "[{\"name\": \"generate_npc_response\", \"description\": \"Generates a response of a full message and an array of possible actions for a NPC\", \"parameters\": {\"type\": \"object\", \"properties\": { \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\", \"enum\": " + actionsJsonArray + ", \"description\": \"The action that the NPC will perform\"}, \"description\": \"List of possible actions for the NPC, should be used one of each category\"},\"message\": {\"type\": \"string\", \"description\": \"The response of the full message from the NPC, it should be the full message including whats after the : \"}}, \"required\": [\"message\", \"actions\"]}}]";
 
         string jsonRequest =
             "{" +
             "\"model\": \"gpt-3.5-turbo-0613\", " +
-            "\"temperature\": 0.5, " +
-            "\"top_p\": 1, " +
+            "\"temperature\": 1.0, " +
+            "\"max_tokens\": 2048, " +
             "\"messages\": [";
 
         // Add each message in the list to the request
@@ -116,6 +115,7 @@ public class OpenAIChat : MonoBehaviour
     // Sends the web request to the OpenAI API
     IEnumerator SendWebRequest(string jsonRequest, bool actionsOnly = false)
     {
+        print("jsonrequest" + jsonRequest + "\n");
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequest);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
@@ -128,23 +128,35 @@ public class OpenAIChat : MonoBehaviour
         {
             
             Debug.Log(request.error);
-            
+            messages.RemoveAt(messages.Count - 1);
+            messages.RemoveAt(messages.Count - 1);
+            ttsService.ConvertToSpeech("there was a problem with the connection, try again");
         }
         else
         {
+            print("json response1" + request + "\n");
+            print("json response2" + request.downloadHandler.text + "\n");
             // Here you can process the response
             var jsonResponse = JSON.Parse(request.downloadHandler.text);
-            print("json response" + jsonResponse.ToString() + "\n");
+            
             // Extract the assistant message and actions
             // Extract the assistant message and add it to the messages list
-            var functionCallResponse = JSON.Parse(jsonResponse["choices"][0]["message"]["function_call"]["arguments"].Value);
+            string functionCallResponseStr = jsonResponse["choices"][0]["message"]["function_call"]["arguments"].Value;
+            var functionCallResponse = JSON.Parse(functionCallResponseStr);
+
             if (!actionsOnly)
             {
-                message = functionCallResponse["message"].Value;
+                message = functionCallResponse["message"].Value.Replace("\"", " ");
+                // in message, replace " with \"
+                message = message.Replace("\"", "\\\"");
+                message = message.Replace("\n", "     ");
+                print("message" + message + "\n");
                 messages.Add(new Message
                 {
                     role = "assistant",
+                    //replace the \n with a space
                     content = message
+
                 });
             }
 
