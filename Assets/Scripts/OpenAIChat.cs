@@ -17,7 +17,7 @@ public class Message
 public class OpenAIChat : MonoBehaviour
 {
     [SerializeField] public List<Message> messages;
-    string apiKey = "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";
+    string apiKey = "";
     string url = "https://api.openai.com/v1/chat/completions";
 
     // Declare public variables

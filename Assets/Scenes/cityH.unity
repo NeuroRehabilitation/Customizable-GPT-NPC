@@ -3322,7 +3322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32765bc491590e147bf8503b5b813abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subscriptionKey: ea7dd199531644d0814e9c666eca524a
+  subscriptionKey: 
   regionEnumed: 0
   languageCodeEnumed: 0
   agentBehaviour: {fileID: 0}
@@ -3436,7 +3436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b451180a0f9954c878c03985498ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SubscriptionKey: ea7dd199531644d0814e9c666eca524a
+  SubscriptionKey: 
   languageEnumed: 0
   voiceNameEnumed: 0
   genderEnumed: 1
