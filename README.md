@@ -44,3 +44,5 @@ Designed with flexibility at its core, each module is prepared for tailoring:
 3. Start customizing the NPCs, integrating advanced AI interactions into your game or simulation 🌐.
 
 Empower your games and simulations with NPCs that think, react, and converse like never before. Dive in and explore the future of in-game interactions! 🎉
+
+![Alt text](npcd.png)
